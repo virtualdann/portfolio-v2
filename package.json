@@ -31,7 +31,6 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://virtualdann.github.io/portfolio",
   "eslintConfig": {
     "extends": [
       "react-app",
