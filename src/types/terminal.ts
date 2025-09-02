@@ -3,6 +3,7 @@ export interface Command {
   description: string;
   execute: (args: string[]) => CommandOutput;
   help?: string;
+  hidden?: boolean;
 }
 
 export interface CommandOutput {

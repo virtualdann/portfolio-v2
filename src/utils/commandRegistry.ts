@@ -1,6 +1,7 @@
 import React from 'react';
 import { Command, CommandOutput } from '../types/terminal';
 import Resume from '../components/Commands/Resume';
+import PongGame from '../components/Games/PongGame';
 
 export class CommandRegistry {
   private commands: Map<string, Command> = new Map();
@@ -56,12 +57,18 @@ export class CommandRegistry {
     this.register({
       name: 'help',
       description: 'Show available commands',
-      execute: () => ({
-        type: 'interactive',
-        content: 'Available commands (click to execute):',
-        timestamp: new Date(),
-        clickableCommands: Array.from(this.commands.keys()),
-      }),
+      execute: () => {
+        const visibleCommands = Array.from(this.commands.entries())
+          .filter(([_, command]) => !command.hidden)
+          .map(([name, _]) => name);
+        
+        return {
+          type: 'interactive',
+          content: 'Available commands (click to execute):',
+          timestamp: new Date(),
+          clickableCommands: visibleCommands,
+        };
+      },
     });
 
     // Resume command
@@ -105,6 +112,18 @@ export class CommandRegistry {
           timestamp: new Date(),
         }),
       });
+    });
+
+    // Easter egg: Pong game (hidden from help)
+    this.register({
+      name: 'pong',
+      description: 'Play a game of pong',
+      execute: () => ({
+        type: 'component',
+        content: React.createElement(PongGame),
+        timestamp: new Date(),
+      }),
+      hidden: true, // Easter egg - not shown in help
     });
   }
 }

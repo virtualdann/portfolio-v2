@@ -19,6 +19,45 @@ const Output: React.FC<OutputProps> = ({ line, onCommandClick }) => {
     }
   };
 
+  const commands = [
+    {
+      command: 'help',
+      description: 'Show this help message',
+    },
+    {
+      command: 'resume',
+      description: 'Display resume information',
+    },
+    {
+      command: 'pong',
+      description: 'IT\'S PONG!',
+    },
+    // {
+    //   command: 'projects',
+    //   description: 'View portfolio projects',
+    // },
+    // {
+    //   command: 'about',
+    //   description: 'Learn more about me',
+    // },
+    // {
+    //   command: 'contact',
+    //   description: 'Get in touch',
+    // },
+    // {
+    //   command: 'skills',
+    //   description: 'Technical skills overview',
+    // },
+    {
+      command: 'clear',
+      description: 'Clear the terminal',
+    },
+    {
+      command: 'whoami',
+      description: 'Display current user',
+    },
+  ];
+
   const renderContent = () => {
     if (typeof line.content === 'string') {
       // Check if this is a help command output with clickable commands
@@ -27,62 +66,15 @@ const Output: React.FC<OutputProps> = ({ line, onCommandClick }) => {
           <div>
             <div className="mb-2">{line.content}</div>
             <div className="ml-4 space-y-1">
-              <div className="flex items-center">
-                <ClickableCommand 
-                  command="help" 
-                  onCommandClick={onCommandClick} 
-                />
-                <span className="ml-8 text-terminal-text">- Show this help message</span>
-              </div>
-              <div className="flex items-center">
-                <ClickableCommand 
-                  command="resume" 
-                  onCommandClick={onCommandClick} 
-                />
-                <span className="ml-6 text-terminal-text">- Display resume information</span>
-              </div>
-              <div className="flex items-center">
-                <ClickableCommand 
-                  command="projects" 
-                  onCommandClick={onCommandClick} 
-                />
-                <span className="ml-4 text-terminal-text">- View portfolio projects</span>
-              </div>
-              <div className="flex items-center">
-                <ClickableCommand 
-                  command="about" 
-                  onCommandClick={onCommandClick} 
-                />
-                <span className="ml-8 text-terminal-text">- Learn more about me</span>
-              </div>
-              <div className="flex items-center">
-                <ClickableCommand 
-                  command="contact" 
-                  onCommandClick={onCommandClick} 
-                />
-                <span className="ml-6 text-terminal-text">- Get in touch</span>
-              </div>
-              <div className="flex items-center">
-                <ClickableCommand 
-                  command="skills" 
-                  onCommandClick={onCommandClick} 
-                />
-                <span className="ml-8 text-terminal-text">- Technical skills overview</span>
-              </div>
-              <div className="flex items-center">
-                <ClickableCommand 
-                  command="clear" 
-                  onCommandClick={onCommandClick} 
-                />
-                <span className="ml-8 text-terminal-text">- Clear the terminal</span>
-              </div>
-              <div className="flex items-center">
-                <ClickableCommand 
-                  command="whoami" 
-                  onCommandClick={onCommandClick} 
-                />
-                <span className="ml-7 text-terminal-text">- Display current user</span>
-              </div>
+              {commands.map((cmd) => (
+                <div className="flex items-center" key={cmd.command}>
+                  <ClickableCommand 
+                    command={cmd.command} 
+                    onCommandClick={onCommandClick} 
+                  />
+                  <span className="text-terminal-text"> - {cmd.description}</span>
+                </div>
+              ))}
             </div>
             <div className="mt-3 text-terminal-cyan">
               Click any command above to execute it.
